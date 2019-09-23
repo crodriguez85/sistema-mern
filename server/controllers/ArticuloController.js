@@ -18,7 +18,7 @@ export default {
             const findArticulo = await models.Articulo.findOne({ _id: req.query._id})
             // Dos params modelo de ref y filtro que solo me diga el nombre
             .populate('categoria', {nombre:1});
-            
+
             if(!findArticulo) {
                 res.status(404).send({
                     message: 'El registro no existe'
@@ -59,8 +59,12 @@ export default {
     update: async (req, res, next) => {
         try {
             const find = await models.Articulo.findByIdAndUpdate({id: req.body.id}, {
+                categoria: req.body.categoria,
+                codigo: req.body.codigo,
                 nombre: req.body.nombre,
-                descripcion: req.body.descripcion
+                descripcion: req.body.descripcion,
+                precio_venta: req.body.precio_venta,
+                stock: req.body.stock
             })
             res.status(200).json(find)
         } catch (error){
