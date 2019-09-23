@@ -33,7 +33,8 @@ export default {
 
     list: async (req, res, next) => {
         try {
-
+            const listCategorias = await models.Categoria.find({});
+            res.status(200).json(listCategorias);
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -44,7 +45,11 @@ export default {
 
     update: async (req, res, next) => {
         try {
-
+            const find = await models.Categoria.findByIdAndUpdate({id: req.body.id}, {
+                nombre: req.body.nombre,
+                descripcion: req.body.descripcion
+            })
+            res.status(200).json(find)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -55,7 +60,8 @@ export default {
 
     remove: async (req, res, next) => {
         try {
-
+            const removeCategoria = await models.Categoria.findByIdAndRemove({ id: req.body.id });
+            res.status(200).json(removeCategoria);
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -66,7 +72,10 @@ export default {
 
     activate: async (req, res, next) => {
         try {
-
+            const activateCategoria = await models.Categoria.findByIdAndUpdate({ id: req.body.id }, {
+                estado: 1,
+            });
+            res.status(200).json(activateCategoria)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -77,7 +86,10 @@ export default {
 
     deactivate: async (req, res, next) => {
         try {
-
+            const deactivateCategoria = await models.Categoria.findByIdAndUpdate({ id: req.body.id }, {
+                estado: 0,
+            });
+            res.status(200).json(deactivateCategoria)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
