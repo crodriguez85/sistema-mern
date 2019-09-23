@@ -55,6 +55,11 @@ export default {
 
     update: async (req, res, next) => {
         try {
+            let pass = req.body.password;
+            const findUser = await models.Usuario.findOne({ _id: req.body._id });
+            if(pass != findUser) {
+                req.body.password = await bcrypt.hash(req.body.password, 10);
+            }
             const find = await models.Usuario.findByIdAndUpdate({_id: req.body._id}, {
                 rol: req.body.rol,
                 nombre: req.body.nombre,
