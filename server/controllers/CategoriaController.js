@@ -33,7 +33,15 @@ export default {
 
     list: async (req, res, next) => {
         try {
-            const listCategorias = await models.Categoria.find({});
+            let valor = req.body.valor;
+            const listCategorias = await models.Categoria.find({
+                // Buscar por nombre como like en sql
+                'nombre': new RegExp(valor, 'i')
+            }, {
+                // Filtro que no se vea createdat
+                createdAt: 0
+            })
+            .sort({'createdAt': -1})
             res.status(200).json(listCategorias);
         } catch (error){
             res.status(500).send({
