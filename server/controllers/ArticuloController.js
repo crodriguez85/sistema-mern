@@ -58,7 +58,7 @@ export default {
 
     update: async (req, res, next) => {
         try {
-            const find = await models.Articulo.findByIdAndUpdate({id: req.body.id}, {
+            const find = await models.Articulo.findByIdAndUpdate({_id: req.body._id}, {
                 categoria: req.body.categoria,
                 codigo: req.body.codigo,
                 nombre: req.body.nombre,
@@ -77,7 +77,7 @@ export default {
 
     remove: async (req, res, next) => {
         try {
-            const removeArticulo = await models.Articulo.findByIdAndRemove({ id: req.body.id });
+            const removeArticulo = await models.Articulo.findByIdAndRemove({ _id: req.body._id });
             res.status(200).json(removeArticulo);
         } catch (error){
             res.status(500).send({
@@ -89,7 +89,7 @@ export default {
 
     activate: async (req, res, next) => {
         try {
-            const activateArticulo = await models.Articulo.findByIdAndUpdate({ id: req.body.id }, {
+            const activateArticulo = await models.Articulo.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 1,
             });
             res.status(200).json(activateArticulo)
@@ -103,7 +103,7 @@ export default {
 
     deactivate: async (req, res, next) => {
         try {
-            const deactivateArticulo = await models.Articulo.findByIdAndUpdate({ id: req.body.id }, {
+            const deactivateArticulo = await models.Articulo.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 0,
             });
             res.status(200).json(deactivateArticulo)
