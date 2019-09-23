@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import router from './routes/index';
 require('dotenv').config();
 
 // Conexion MongoDB
@@ -21,6 +22,9 @@ app.use(cors());
 // Use formato json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Rutas
+app.use('/api', router);
 
 app.set('port', process.env.PORT || 4000);
 
