@@ -41,6 +41,8 @@ export default {
                 // Filtro que no se vea createdat
                 createdAt: 0
             })
+            // Dos params modelo de ref y filtro que solo me diga el nombre
+            .populate('categoria', {nombre:1})
             .sort({'createdAt': -1})
             res.status(200).json(listArticulos);
         } catch (error){
