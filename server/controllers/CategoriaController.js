@@ -15,7 +15,14 @@ export default {
 
     query: async (req, res, next) => {
         try {
-
+            const findCategoria = await models.Categoria.findOne({ _id: req.query._id});
+            if(!findCategoria) {
+                res.status(404).send({
+                    message: 'El registro no existe'
+                });
+            } else {
+                res.status(200).json(findCategoria);
+            }
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
