@@ -10,3 +10,4 @@ router.delete('/remove', categoriaController.remove);
 router.put('/activate', categoriaController.activate);
 router.put('/deactivate', categoriaController.deactivate);
 
+export default router;
