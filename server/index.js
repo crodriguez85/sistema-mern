@@ -4,6 +4,6 @@ const app = express();
 
 app.set('port', process.env.PORT || 4000);
 
-app.listen(3000, () => {
-    console.log('Server Listening on port 3000')
+app.listen(app.get('port'), () => {
+    console.log(`Server listening on localhost:${app.get('port')}`)
 })
