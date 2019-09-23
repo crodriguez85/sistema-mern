@@ -17,13 +17,13 @@ export default {
 
     query: async (req, res, next) => {
         try {
-            const findCategoria = await models.Categoria.findOne({ _id: req.query._id});
-            if(!findCategoria) {
+            const findUsuario = await models.Usuario.findOne({ _id: req.query._id});
+            if(!findUsuario) {
                 res.status(404).send({
                     message: 'El registro no existe'
                 });
             } else {
-                res.status(200).json(findCategoria);
+                res.status(200).json(findUsuario);
             }
         } catch (error){
             res.status(500).send({
@@ -36,15 +36,15 @@ export default {
     list: async (req, res, next) => {
         try {
             let valor = req.body.valor;
-            const listCategorias = await models.Categoria.find({$or: [
+            const listUsuarios = await models.Usuario.find({$or: [
                 // Buscar como like en sql
                 {'nombre': new RegExp(valor, 'i')}, 
-                {'descripcion': new RegExp(valor, 'i')}]}, {
+                {'email': new RegExp(valor, 'i')}]}, {
                 // Filtro que no se vea createdat
                 createdAt: 0
             })
             .sort({'createdAt': -1})
-            res.status(200).json(listCategorias);
+            res.status(200).json(listUsuarios);
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -55,9 +55,15 @@ export default {
 
     update: async (req, res, next) => {
         try {
-            const find = await models.Categoria.findByIdAndUpdate({_id: req.body._id}, {
+            const find = await models.Usuario.findByIdAndUpdate({_id: req.body._id}, {
+                rol: req.body.rol,
                 nombre: req.body.nombre,
-                descripcion: req.body.descripcion
+                tipo_documento: req.body.tipo_documento,
+                num_documento: req.body.num_documento,
+                direccion: req.body.direccion,
+                telefono: req.body.telefono,
+                email: req.body.email,
+                password: req.body.password
             })
             res.status(200).json(find)
         } catch (error){
@@ -70,8 +76,8 @@ export default {
 
     remove: async (req, res, next) => {
         try {
-            const removeCategoria = await models.Categoria.findByIdAndRemove({ _id: req.body._id });
-            res.status(200).json(removeCategoria);
+            const removeUsuario = await models.Usuario.findByIdAndRemove({ _id: req.body._id });
+            res.status(200).json(removeUsuario);
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -82,10 +88,10 @@ export default {
 
     activate: async (req, res, next) => {
         try {
-            const activateCategoria = await models.Categoria.findByIdAndUpdate({ _id: req.body._id }, {
+            const activateUsuario = await models.Usuario.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 1,
             });
-            res.status(200).json(activateCategoria)
+            res.status(200).json(activateUsuario)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -96,10 +102,10 @@ export default {
 
     deactivate: async (req, res, next) => {
         try {
-            const deactivateCategoria = await models.Categoria.findByIdAndUpdate({ _id: req.body._id }, {
+            const deactivateUsuario = await models.Usuario.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 0,
             });
-            res.status(200).json(deactivateCategoria)
+            res.status(200).json(deactivateUsuario)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
