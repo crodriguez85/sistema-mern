@@ -15,7 +15,10 @@ export default {
 
     query: async (req, res, next) => {
         try {
-            const findArticulo = await models.Articulo.findOne({ _id: req.query._id});
+            const findArticulo = await models.Articulo.findOne({ _id: req.query._id})
+            // Dos params modelo de ref y filtro que solo me diga el nombre
+            .populate('categoria', {nombre:1});
+            
             if(!findArticulo) {
                 res.status(404).send({
                     message: 'El registro no existe'
