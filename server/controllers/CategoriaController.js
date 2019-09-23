@@ -33,7 +33,16 @@ export default {
 
     list: async (req, res, next) => {
         try {
-            const listCategorias = await models.Categoria.find({});
+            let valor = req.query.valor;
+            const listCategorias = await models.Categoria.find({
+                // RegExp = like en sql
+                'nombre': new RegExp(valor, 'i')
+            }, {
+                // Filtros de Busqueda
+                // No muestre CreatedAt
+                createdAt: 0
+            })
+            .sort({'createdAt': -1})
             res.status(200).json(listCategorias);
         } catch (error){
             res.status(500).send({
@@ -45,7 +54,7 @@ export default {
 
     update: async (req, res, next) => {
         try {
-            const find = await models.Categoria.findByIdAndUpdate({id: req.body.id}, {
+            const find = await models.Categoria.findByIdAndUpdate({_id: req.body._id}, {
                 nombre: req.body.nombre,
                 descripcion: req.body.descripcion
             })
@@ -60,7 +69,7 @@ export default {
 
     remove: async (req, res, next) => {
         try {
-            const removeCategoria = await models.Categoria.findByIdAndRemove({ id: req.body.id });
+            const removeCategoria = await models.Categoria.findByIdAndRemove({ _id: req.body._id });
             res.status(200).json(removeCategoria);
         } catch (error){
             res.status(500).send({
@@ -72,7 +81,7 @@ export default {
 
     activate: async (req, res, next) => {
         try {
-            const activateCategoria = await models.Categoria.findByIdAndUpdate({ id: req.body.id }, {
+            const activateCategoria = await models.Categoria.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 1,
             });
             res.status(200).json(activateCategoria)
@@ -86,7 +95,7 @@ export default {
 
     deactivate: async (req, res, next) => {
         try {
-            const deactivateCategoria = await models.Categoria.findByIdAndUpdate({ id: req.body.id }, {
+            const deactivateCategoria = await models.Categoria.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 0,
             });
             res.status(200).json(deactivateCategoria)
