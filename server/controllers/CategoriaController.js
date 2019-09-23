@@ -34,10 +34,10 @@ export default {
     list: async (req, res, next) => {
         try {
             let valor = req.body.valor;
-            const listCategorias = await models.Categoria.find({
-                // Buscar por nombre como like en sql
-                'nombre': new RegExp(valor, 'i')
-            }, {
+            const listCategorias = await models.Categoria.find({$or: [
+                // Buscar como like en sql
+                {'nombre': new RegExp(valor, 'i')}, 
+                {'descripcion': new RegExp(valor, 'i')}]}, {
                 // Filtro que no se vea createdat
                 createdAt: 0
             })
