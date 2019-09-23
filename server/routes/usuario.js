@@ -1,0 +1,13 @@
+import express from 'express';
+import usuarioController from '../controllers/UserController';
+const router = express.Router();
+
+router.post('/add', usuarioController.add);
+router.get('/query', usuarioController.query);
+router.get('/list', usuarioController.list);
+router.put('/update', usuarioController.update);
+router.delete('/remove', usuarioController.remove);
+router.put('/activate', usuarioController.activate);
+router.put('/deactivate', usuarioController.deactivate);
+
+export default router;
