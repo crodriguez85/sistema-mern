@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import models from '../models/index';
+import models from '../models/';
 
 export default {
     encode: async (_id) => {
-        const token = jwt.sign({_id: _id}, process.env.TOKEN_CLAVE, {expiresIn: '1d'});
+        const token = jwt.sign({_id: _id}, 'clave', {expiresIn: '1d'});
         return token;
     },
 
