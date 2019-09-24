@@ -126,9 +126,7 @@ export default {
                 // Existe Usuario con Mail
                 let match = await bcrypt.compare(req.body.password, user.password);
                 if (match){
-                    res.json({
-                        'Password Correcto'
-                    })
+                    res.json('Password Correcto')
                 } else {
                     res.status(404).send({
                         message: 'Password Incorrecto'
