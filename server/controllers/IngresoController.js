@@ -8,6 +8,15 @@ async function aumentarStock(idarticulo, cantidad){
     );
 }
 
+async function disminuirStock(idarticulo, cantidad){
+    let { stock } = await models.Articulo.findOne({_id: idarticulo});
+    let nStock = parseInt(stock) - parseInt(cantidad);
+    const registroDismuirStock = await models.Articulo.findByIdAndUpdate(
+        {_id: idarticulo}, 
+        {stock: nStock}
+    );
+}
+
 export default {
     add: async (req, res, next) => {
         try {
@@ -70,6 +79,10 @@ export default {
             const activateIngreso = await models.Ingreso.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 1,
             });
+            let detalles = activateIngreso.detalles;
+            detalles.map(function(x){
+                aumentarStock(x._id, x.cantidad);
+            })
             res.status(200).json(activateIngreso)
         } catch (error){
             res.status(500).send({
@@ -83,6 +96,10 @@ export default {
         try {
             const deactivateIngreso = await models.Ingreso.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 0,
+            });
+            let detalles = deactivateIngreso.detalles;
+            detalles.map(function(x){
+                disminuirStock(x._id, x.cantidad);
             });
             res.status(200).json(deactivateIngreso)
         } catch (error){
