@@ -54,10 +54,10 @@ export default {
 
     activate: async (req, res, next) => {
         try {
-            const activateCategoria = await models.Ingreso.findByIdAndUpdate({ _id: req.body._id }, {
+            const activateIngreso = await models.Ingreso.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 1,
             });
-            res.status(200).json(activateCategoria)
+            res.status(200).json(activateIngreso)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
@@ -68,10 +68,10 @@ export default {
 
     deactivate: async (req, res, next) => {
         try {
-            const deactivateCategoria = await models.Categoria.findByIdAndUpdate({ _id: req.body._id }, {
+            const deactivateIngreso = await models.Ingreso.findByIdAndUpdate({ _id: req.body._id }, {
                 estado: 0,
             });
-            res.status(200).json(deactivateCategoria)
+            res.status(200).json(deactivateIngreso)
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
