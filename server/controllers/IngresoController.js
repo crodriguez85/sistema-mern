@@ -12,6 +12,11 @@ export default {
     add: async (req, res, next) => {
         try {
             const registroIngreso = await models.Ingreso.create(req.body);
+            // Actualizo Stock
+            let detalles = req.body.detalles;
+            detalles.map(function(x){
+                aumentarStock(x._id, x.cantidad);
+            })
             res.status(200).json(registroIngreso);
         } catch (error){
             res.status(500).send({
