@@ -1,6 +1,5 @@
 import models from '../models/index';
 import bcrypt from 'bcryptjs';
-import token from '../services/token';
 
 export default {
     add: async (req, res, next) => {
@@ -127,8 +126,9 @@ export default {
                 // Existe Usuario con Mail
                 let match = await bcrypt.compare(req.body.password, user.password);
                 if (match){
-                    let tokenReturn = await token.encode(user._id);
-                    res.status(200).json(user, tokenReturn);
+                    res.json({
+                        'Password Correcto'
+                    })
                 } else {
                     res.status(404).send({
                         message: 'Password Incorrecto'
