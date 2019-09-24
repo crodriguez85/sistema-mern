@@ -1,4 +1,12 @@
 import models from '../models/index';
+async function aumentarStock(idarticulo, cantidad){
+    let { stock } = await models.Articulo.findOne({_id: idarticulo});
+    let nStock = parseInt(stock) + parseInt(cantidad);
+    const registroAumentoStock = await models.Articulo.findByIdAndUpdate(
+        {_id: idarticulo}, 
+        {stock: nStock}
+    );
+}
 
 export default {
     add: async (req, res, next) => {
