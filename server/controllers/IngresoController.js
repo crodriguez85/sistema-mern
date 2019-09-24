@@ -35,43 +35,15 @@ export default {
 
     list: async (req, res, next) => {
         try {
-            let valor = req.body.valor;
-            const listCategorias = await models.Categoria.find({$or: [
+            const listIngresos = await models.Ingreso.find({$or: [
                 // Buscar como like en sql
-                {'nombre': new RegExp(valor, 'i')}, 
-                {'descripcion': new RegExp(valor, 'i')}]}, {
-                // Filtro que no se vea createdat
-                createdAt: 0
+                {'num_comprobante': new RegExp(valor, 'i')}, 
+                {'serie_comprobante': new RegExp(valor, 'i')}]}, {
             })
+            .populate('usuario', { nombre: 1 })
+            .populate('persona', { nombre: 1 })
             .sort({'createdAt': -1})
-            res.status(200).json(listCategorias);
-        } catch (error){
-            res.status(500).send({
-                message: 'Ocurrio un Error'
-            });
-            next(error);
-        }
-    },
-
-    update: async (req, res, next) => {
-        try {
-            const find = await models.Categoria.findByIdAndUpdate({_id: req.body._id}, {
-                nombre: req.body.nombre,
-                descripcion: req.body.descripcion
-            })
-            res.status(200).json(find)
-        } catch (error){
-            res.status(500).send({
-                message: 'Ocurrio un Error'
-            });
-            next(error);
-        }
-    },
-
-    remove: async (req, res, next) => {
-        try {
-            const removeCategoria = await models.Categoria.findByIdAndRemove({ _id: req.body._id });
-            res.status(200).json(removeCategoria);
+            res.status(200).json(listIngresos);
         } catch (error){
             res.status(500).send({
                 message: 'Ocurrio un Error'
