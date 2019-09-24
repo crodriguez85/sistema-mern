@@ -1,0 +1,12 @@
+import express from 'express';
+import ingresoController from '../controllers/IngresoController';
+import auth from '../middlewares/auth';
+const router = express.Router();
+
+router.post('/add', auth.verifyAlmacenero, ingresoController.add);
+router.get('/query', auth.verifyAlmacenero, ingresoController.query);
+router.get('/list', auth.verifyAlmacenero, ingresoController.list);
+router.put('/activate', auth.verifyAlmacenero, ingresoController.activate);
+router.put('/deactivate', auth.verifyAlmacenero, ingresoController.deactivate);
+
+export default router;
