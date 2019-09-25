@@ -34,6 +34,27 @@ export default {
         }
     },
 
+    queryCodigo: async (req, res, next) => {
+        try {
+            const findArticulo = await models.Articulo.findOne({ codigo: req.query.codigo})
+            // Dos params modelo de ref y filtro que solo me diga el nombre
+            .populate('categoria', {nombre:1});
+
+            if(!findArticulo) {
+                res.status(404).send({
+                    message: 'El registro no existe'
+                });
+            } else {
+                res.status(200).json(findArticulo);
+            }
+        } catch (error){
+            res.status(500).send({
+                message: 'Ocurrio un Error'
+            });
+            next(error);
+        }
+    },
+
     list: async (req, res, next) => {
         try {
             let valor = req.body.valor;
