@@ -8,5 +8,6 @@ router.get('/query', auth.verifyAlmacenero, ingresoController.query);
 router.get('/list', auth.verifyAlmacenero, ingresoController.list);
 router.put('/activate', auth.verifyAlmacenero, ingresoController.activate);
 router.put('/deactivate', auth.verifyAlmacenero, ingresoController.deactivate);
+router.get('/grafico12meses', auth.verifyUsuario, ingresoController.grafico12Meses);
 
 export default router;

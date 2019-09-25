@@ -108,5 +108,38 @@ export default {
             });
             next(error);
         }
+    },
+
+    grafico12Meses: async (req, res, next) => {
+        try {
+            const registro12meses = await models.Ingreso.aggregate(
+                [
+                    {
+                        $group:{
+                            _id:{
+                                mes: {$month: "$createdAt"},
+                                year: {$year: "$createdAt"}
+                            },
+                            total_ventas: {$sum: "$total"},
+                            total_numero_ventas: {$sum: 1}
+                        }
+                    },
+                    {
+                        $sort:{
+                            "_id.year": -1, 
+                            "_id.mes": -1
+                        }
+                    }
+                ]
+            ).limit(12);
+            res.status(200).json(registro12meses);
+
+        } catch (error){
+            res.status(500).send({
+                message: 'Ocurrio un Error'
+            });
+            next(error);
+        }
+
     }
 }
