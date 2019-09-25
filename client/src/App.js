@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import AuthService from './services/AuthService';
-import UserNav from './components/commons/UserNav';
+import Home from './components/commons/Home';
 import Login from './components/commons/Login';
+import UserNav from './components/commons/UserNav';
+import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 
 class App extends Component {
+
   constructor(props){
     super(props);
     this.auth = new AuthService();
-    this.state = {
-      auth: this.auth.isLoggedIn()
-    }
+    this.state = {auth: this.auth.isLoggedIn()};
+    this.onAuthChange = this.onAuthChange.bind(this);
   }
-  render() { 
+
+  render() {
     if(this.state.auth){
-      return (<UserNav/>)
+      return(<UserNav onAuthChange={this.onAuthChange}></UserNav>);
     }
-    return (<Login/>);
+    return (
+    <Router>
+      <Switch>
+        <Route path="/Login" render={(routerProps)=> <Login {...routerProps} onAuthChange={this.onAuthChange}></Login>}/>
+        <Redirect from="*" to="/Login"/>
+      </Switch>
+    </Router>
+    );
   }
+
+  onAuthChange(){
+    this.setState({auth:this.auth.isLoggedIn()});
+  }
+
 }
- 
+
 export default App;
