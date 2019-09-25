@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import AuthService from './services/AuthService';
-import Home from './components/commons/Home';
+import UserNav from './components/commons/UserNav';
 import Login from './components/commons/Login';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
   }
   render() { 
     if(this.state.auth){
-      return (<Home/>)
+      return (<UserNav/>)
     }
     return (<Login/>);
   }
