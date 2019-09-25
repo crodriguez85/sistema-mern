@@ -13,6 +13,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import AuthService from '../../services/AuthService';
 import Home from './Home';
+import Stock from './Stock';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -159,6 +160,7 @@ class UserNav extends Component{
               <div className={classes.drawerHeader} />
               <Switch>
                 <Route path='/' exact render={routerProps=> <Home {...routerProps} proname={'p'}/>}></Route>
+                <Route path='/stock' exact render={routerProps=> <Stock {...routerProps} proname={'p'}/>}></Route>
                 <Redirect from="*" to="/"/>
               </Switch>
             </main>        
