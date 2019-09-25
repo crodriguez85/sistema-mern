@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import AuthService from './services/AuthService';
+import Home from './components/commons/Home';
+import Login from './components/commons/Login';
 
 class App extends Component {
   constructor(props){
@@ -11,9 +13,10 @@ class App extends Component {
     }
   }
   render() { 
-    return ( 
-      <div></div>
-     );
+    if(this.state.auth){
+      return (<Home/>)
+    }
+    return (<Login/>);
   }
 }
  
